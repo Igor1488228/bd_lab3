@@ -1,9 +1,20 @@
-DECLARE
-    items_count int := 7;
-BEGIN 
-    for i in 1..items_count LOOP
+  
+BEGIN
+    FOR i IN 1..20 LOOP
+        INSERT INTO countries (country_name) VALUES ('country' || i);
     
-        INSERT INTO university ( university_name, country, position, year)
-            values ('university' || i, 'United States', '1+i' || i, 2012+i);
-    end loop;
+        INSERT INTO universities (
+            university_name,
+            dynamic_year,
+            split_year,
+            country_name
+        ) VALUES (
+            'Univercity' || i,
+            1930 - 3 * i,
+            1930 + 4 * i,
+            'country' || i
+        );
+
+    END LOOP;
+
 END;

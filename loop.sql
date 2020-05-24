@@ -6,7 +6,7 @@ BEGIN
         INSERT INTO universities (
             university_name,
             dynamic_year,
-            split_year,
+            national_rank,
             country_name
         ) VALUES (
             'Univercity' || i,

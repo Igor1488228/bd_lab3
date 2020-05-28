@@ -1,13 +1,16 @@
 import csv
 import cx_Oracle
 
-username = 'SYSTEM'
-password = '123'
+
+username = 'BATIAVGNEVE'
+password = 'Ehuvum228'
 dsn = 'localhost/xe'
+
 
 connection = cx_Oracle.connect(username, password, dsn)
 
-tables = ['Bands', 'Genres', 'Countries', 'Bands_Genres', 'Fans']
+tables = ['Universities', 'Ranks', 'Countries', 'Universities_Ranks', 'Quality_of_faculty']
+
 
 for table in tables:
     with open(table + '.csv', 'w', newline = '') as file:
@@ -34,4 +37,6 @@ for table in tables:
 
         cursor.close()
         
-connection.close()
+
+        
+        connection.close()

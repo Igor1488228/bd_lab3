@@ -94,7 +94,7 @@ country_ranks = dict()
 
 cursor.execute(second_query)
 for raw in cursor:
-    country_genres[raw[0]] = raw[1]
+    country_ranks[raw[0]] = raw[1]
 
 pie = go.Pie(labels=list(country_ranks.keys()), values=list(country_ranks.values()))
 percent_of_ranks_url = py.plot([pie], filename='ranks_2')

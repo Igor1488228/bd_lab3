@@ -1,21 +1,21 @@
 import csv
 import cx_Oracle
 
-username = 'SYSTEM'
-password = '123'
+username = 'BATIAVGNEVE'
+password = 'Ehuvum228'
 dsn = 'localhost/xe'
 
 connection = cx_Oracle.connect(username, password, dsn)
 
-with open('C:/Users/admin/Desktop/metal.csv') as file:
+with open('C:/Users/admin/Desktop/university.csv') as file:
     reader = csv.reader(file)
 
     next(reader)
     country_unique = []
-    genre_unique = []
-    bands_unique = []
-    fans_unique = []
-    bands_genres_unique = []
+    rank_unique = []
+    universities_unique = []
+    quality_of_faculty_unique = []
+    universities_rank_unique = []
     error_counter = 0
 
     cursor = connection.cursor()
@@ -23,29 +23,29 @@ with open('C:/Users/admin/Desktop/metal.csv') as file:
         for row in reader:
 
             country = row[4].split(',')[0].strip()
-            band = row[1].strip()
-            genres = row[6].split(',')
-            record = '05.05.2020'
+            university = row[1].strip()
+            ranks = row[6].split(',')
+            record = '28.05.2020'
 
             try:
-                formed = int(row[3])
+                dynamic = int(row[3])
             except:
                 continue
 
 
             try:
-                fans = int(row[2])
+                quality_of_faculty = int(row[2])
             except:
-                fans = None
+                quality_of_faculty = None
 
 
             try:
-                split = int(row[5])
+                national = int(row[5])
             except:
-                split = None
+                national = None
 
 
-            if (not country) or (not band) or (not formed):
+            if (not country) or (not university) or (not dynamic):
                 continue
 
 
@@ -55,28 +55,28 @@ with open('C:/Users/admin/Desktop/metal.csv') as file:
                 country_unique.append(country.lower())
 
 
-            if (band.lower(), formed, country.lower()) not in bands_unique:
-                cursor.execute("INSERT INTO Bands (band_name, formed_year, country_name, split_year) VALUES " +
-                               "(:band, :formed, :country, :split)", (band, formed, country, split))
-                bands_unique.append((band.lower(), formed, country.lower()))
+            if (university.lower(), dynamic, country.lower()) not in universities_unique:
+                cursor.execute("INSERT INTO Universities (university_name, dynamic_year, country_name, national_rank) VALUES " +
+                               "(:university, :dynamic, :country, :national)", (university, dynamic, country, national))
+                universities_unique.append((university.lower(), dynamic, country.lower()))
 
 
-            for genre in genres:
-                if genre.lower().strip() not in genre_unique:
-                    cursor.execute("INSERT INTO Genres (genre_name) VALUES (:genre)", genre=genre.strip())
-                    genre_unique.append(genre.strip().lower())
+            for rank in ranks:
+                if rank.lower().strip() not in rank_unique:
+                    cursor.execute("INSERT INTO Ranks (university_rank) VALUES (:rank)", rank=rank.strip())
+                    rank_unique.append(rank.strip().lower())
 
-                if (band.lower(), formed, country.lower(),genre.lower().strip()) not in bands_genres_unique:
-                    cursor.execute("INSERT INTO Bands_Genres (band_name, formed_year, country_name, genre_name) VALUES " +
-                                   "(:band, :formed, :country, :genre)", (band, formed, country, genre.strip()))
-                    bands_genres_unique.append((band.lower(), formed, country.lower(), genre.lower().strip()))
+                if (university.lower(), dynamic, country.lower(),rank.lower().strip()) not in universities_ranks_unique:
+                    cursor.execute("INSERT INTO Universities_Ranks (university_name, dynamic_year, country_name, university_rank) VALUES " +
+                                   "(:university, :dynamic, :country, :rank)", (university, dynamic, country, rank.strip()))
+                    universities_ranks_unique.append((university.lower(), dynamic, country.lower(), rank.lower().strip()))
 
 
 
-            if (band.lower(), formed, country.lower(), record) not in fans_unique:
-                cursor.execute("INSERT INTO Fans (band_name, formed_year, country_name, record_date, fans) VALUES " +
-                    "(:band, :formed, :country, TO_DATE(:record, 'DD-MM-YYYY'), :fans)", (band, formed, country, record, fans))
-                fans_unique.append((band.lower(), formed, country.lower(), record))
+            if (university.lower(), dynamic, country.lower(), record) not in quality_of_faculty_unique:
+                cursor.execute("INSERT INTO Quality_of_faculty (university_name, dynamic_year, country_name, record_date, quality_of_faculty) VALUES " +
+                    "(:university, :dynamic, :country, TO_DATE(:record, 'DD-MM-YYYY'), :quality_of_faculty)", (university, dynamic, country, record, quality_of_faculty))
+                quality_of_faculty_unique.append((university.lower(), dynamic, country.lower(), record))
 
             error_counter +=1
 
